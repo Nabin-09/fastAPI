@@ -27,3 +27,16 @@ def hello():
 ```
 
 ```uvicorn main:app --reload```
+
+### Helper function to load json data
+```py
+def load_data():
+    with open('patients.json' , 'r') as f:
+        data = json.load(f)
+    return data
+```
+
+## Path and Query parameters :
+
+- Path Params : dynamic segments of a URL path used to identify a specific resource
+ 
