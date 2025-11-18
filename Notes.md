@@ -65,3 +65,10 @@ goes wrong with API
 
 - Optional key-value pairs appended at the end of URL , to pass additional info to the server in an HTTP request.<br>
 These are typically employed for operations like filtering , sorting , searching and pagination , without altering the path itself.
+
+
+Query() is a utilify fn provided by FastAPI to declare , validate and document query params in your API endpoints. <br>
+it allows us to 
+- Set default values
+- Enforce validation rules
+- add metadata like desc , title , examples

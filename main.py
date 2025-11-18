@@ -32,4 +32,7 @@ def view_patient(patient_id : str = Path(... ,description='ID of the patient in 
     if patient_id in data:
         return data[patient_id]
     raise HTTPException(status_code=404 , detail='Patient not fouund')
-    
+
+
+@app.get('/sort')
+def sort_patient(sort_by: str)
