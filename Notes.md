@@ -59,3 +59,9 @@ def view_patient(patient_id : str = Path(... ,description='ID of the patientin D
 
 - HTTPException is a special builtin exception in FastAPI used to return custom HTTP error responses when something 
 goes wrong with API
+
+
+### Query Parameters : 
+
+- Optional key-value pairs appended at the end of URL , to pass additional info to the server in an HTTP request.<br>
+These are typically employed for operations like filtering , sorting , searching and pagination , without altering the path itself.
