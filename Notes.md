@@ -40,3 +40,35 @@ def load_data():
 
 - Path Params : dynamic segments of a URL path used to identify a specific resource
  
+```py
+@app.get('/patient/{patient_id}')
+def view_patient(patient_id : str = Path(... ,description='ID of the patientin DB' , example='P001')):
+    # Load all the patients
+    data = load_data()
+
+    if patient_id in data:
+        return data[patient_id]
+    return {'error' : 'Patient not found'}
+```
+
+- Learn about Path function from FastAPI that enhances API endpoints
+
+### Status codes :
+- 3 digit numbers returned by web server to indicate result of a clients request(like from a browser or API consumer)
+- Learn about them in detail
+
+- HTTPException is a special builtin exception in FastAPI used to return custom HTTP error responses when something 
+goes wrong with API
+
+
+### Query Parameters : 
+
+- Optional key-value pairs appended at the end of URL , to pass additional info to the server in an HTTP request.<br>
+These are typically employed for operations like filtering , sorting , searching and pagination , without altering the path itself.
+
+
+Query() is a utilify fn provided by FastAPI to declare , validate and document query params in your API endpoints. <br>
+it allows us to 
+- Set default values
+- Enforce validation rules
+- add metadata like desc , title , examples
