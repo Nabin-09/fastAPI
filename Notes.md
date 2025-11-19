@@ -134,3 +134,13 @@ patient1 = Patient(**patient_info)
 
 
 ``` 
+
+## POST requests : 
+- We send data on server in the request body
+
+```python
+
+app.post('/create')
+def create_patient(patient : Patient): #Data type of post is my Pydantic model
+```
+- This is how we actually use the Pydantic Model validation in POST requests
