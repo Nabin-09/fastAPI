@@ -72,3 +72,58 @@ it allows us to
 - Set default values
 - Enforce validation rules
 - add metadata like desc , title , examples
+
+## Pydantic - Why ?
+
+
+```python
+def insert_patient_data(name , age):
+    print(name)
+    print(age)
+
+insert_patient_data('Nabin' , 'Twenty Two') # we expected age to be integer but user may send string as well
+```
+- Solution 
+
+
+```python
+def insert_patient_data(name: str, age : int):
+
+
+    if type(name) == str and type(age) == int : # This is correct way but not scalable
+        if age < 0:
+            raise ValueError('Age is not valid')
+        else :
+            print(name)
+            print(age)
+            print('inserted into database')
+    else :
+        raise TypeError('Incorrect data type')
+
+insert_patient_data('Nabin' , 22)
+```
+
+## How Pydantic saves us from loads of manual Type and Value validation 
+
+- Define a Pydantic model/class and represent ideal schema of data , with ideal constraints
+- Instantiate the model with raw data and coerce it into Py types
+- Pass the validated model to object
+
+```python
+from pydantic import BaseModel
+
+class Patient(BaseModel):
+    name : str
+    age : int
+
+def insert_patient_data(patient: Patient):
+    print(patient.name)
+    print(patient.ag)
+    print('inserted')
+
+patient_info = {'name' :'Nabin' , 'age' : 22}
+
+patient1 = Patient(**patient_info)
+
+
+``` 
