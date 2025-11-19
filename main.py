@@ -1,6 +1,7 @@
 from fastapi import FastAPI , Path , HTTPException , Query
 from pydantic import BaseModel , Field , computed_field
 from typing import  Annotated , Literal
+from fastapi.responses import JSONResponse
 import json 
 
 app = FastAPI()
@@ -35,7 +36,9 @@ def load_data():
         data = json.load(f)
     return data
 
-def save_data 
+def save_data(data):
+    with open('patients.json' , 'w') as f :
+        json.dump(data , f)
 
 
 @app.get("/")
@@ -82,7 +85,7 @@ def sort_patient(sort_by: str = Query(... , description='Sort on basis of height
 
     return sorted_data
 
-app.post('/create')
+@app.post('/create')
 def create_patient(patient : Patient): #Data type of post is my Pydantic model
     # Load Existing Data
     data = load_data()
@@ -95,4 +98,6 @@ def create_patient(patient : Patient): #Data type of post is my Pydantic model
     # new patient is added to the database
 
     data[patient.id] = patient.model_dump(exclude=['id']) # Converts Pydantic model to Dict
+    save_data(data)
 
+    return JSONResponse(status_code=201 , content= {'message' : 'Patient created Succesfully 🚀!'})

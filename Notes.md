@@ -144,3 +144,29 @@ app.post('/create')
 def create_patient(patient : Patient): #Data type of post is my Pydantic model
 ```
 - This is how we actually use the Pydantic Model validation in POST requests
+
+```
+app.post('/create')
+def create_patient(patient : Patient): #Data type of post is my Pydantic model
+    # Load Existing Data
+    data = load_data()
+
+
+    #Check if Patient already Exists
+    if(patient.id in data):
+        raise HTTPException(status_code=400 , detail='Patient already Exists! ')
+
+    # new patient is added to the database
+
+    data[patient.id] = patient.model_dump(exclude=['id']) # Converts Pydantic model to Dict
+    save_data(data)
+
+    return JSONResponse(status_code=201 , content= {'message' : 'Patient created Succesfully 🚀!'})
+
+
+```
+- This is final endpoint
+```def save_data(data):
+    with open('patients.json' , 'w') as f :
+        json.dump(data , f)
+``` this was our helper function
