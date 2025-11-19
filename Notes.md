@@ -114,7 +114,7 @@ from pydantic import BaseModel , EmailStr , AnyUrl , Field
 from typing import List , Dict , Optional , Annotated # Annotated is used to give meta data 
 
 class Patient(BaseModel):
-    name : str = Field(max_length=50)
+    name : str = Annotated[str , Field(max_length = 50, title = 'Name of the patient', description = 'Name of patient in less than 50 characters' , examples=['Nabin' , 'Nitin'])]
     age : int
     email : EmailStr #Pre-made data type from Pydantic to validate emails
     linkedIn_url : AnyUrl 
