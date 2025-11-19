@@ -110,11 +110,18 @@ insert_patient_data('Nabin' , 22)
 - Pass the validated model to object
 
 ```python
-from pydantic import BaseModel
+from pydantic import BaseModel , EmailStr , AnyUrl , Field
+from typing import List , Dict , Optional , Annotated # Annotated is used to give meta data 
 
 class Patient(BaseModel):
-    name : str
+    name : str = Field(max_length=50)
     age : int
+    email : EmailStr #Pre-made data type from Pydantic to validate emails
+    linkedIn_url : AnyUrl 
+    weight : float = Field(gt=0) #Custom requirement , greater than 0
+    married : bool = False
+    allergies : Optional[List[str]] # If not given it return None
+    contact_details : Dict[str , str]
 
 def insert_patient_data(patient: Patient):
     print(patient.name)
