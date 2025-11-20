@@ -150,13 +150,14 @@
         "verdict": "Normal"
     },
     "P016": {
-        "name": "Nabin Sharma",
-        "city": "Noida",
+        "name": "Nigger Sharma",
+        "city": "Siliguri",
         "age": 22,
         "gender": "male",
         "height": 1.74,
-        "weight": 76.0,
+        "weight": 70.0,
         "bmi": 25.1,
-        "verdict": "Obese"
+        "verdict": "Obese",
+        "id": "P016"
     }
 }
