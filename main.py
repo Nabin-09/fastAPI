@@ -1,7 +1,7 @@
 from fastapi import FastAPI , Path , HTTPException , Query
 from pydantic import BaseModel , Field , computed_field
-from typing import  Annotated , Literal
-from fastapi.responses import JSONResponse
+from typing import  Annotated , Literal , Optional
+fr]om fastapi.responses import JSONResponse
 import json 
 
 app = FastAPI()
@@ -30,6 +30,15 @@ class Patient(BaseModel):
             return 'Normal'
         else :
             return 'Obese'  
+        
+class PatientUpdate(BaseModel):
+    name : Annotated[Optional[str] , Field(... , description='Name of the patient' , examples=['Nabin'])]
+    city : Annotated[Optional[str] , Field(... , description='City where the patient lives')]
+    age : Annotated[Optional[int] , Field(... , gt = 0 , lt=120 , description='Age of the patient')]
+    gender : Annotated[Optional[Literal['male' , 'female' , 'others']] , Field(... , description='Gender of the patient')]
+    height : Annotated[Optional[float] , Field(... , description='height of the patient')]
+    weight : float
+
 
 def load_data():
     with open('patients.json' , 'r') as f:
@@ -101,3 +110,4 @@ def create_patient(patient : Patient): #Data type of post is my Pydantic model
     save_data(data)
 
     return JSONResponse(status_code=201 , content= {'message' : 'Patient created Succesfully 🚀!'})
+

@@ -169,4 +169,9 @@ def create_patient(patient : Patient): #Data type of post is my Pydantic model
 ```def save_data(data):
     with open('patients.json' , 'w') as f :
         json.dump(data , f)
-``` this was our helper function
+``` 
+- This was our helper fn     
+
+## PUT & DELETE requests :
+- We will need to make a new Pydantic model , based upon what data needs to be changed
+
