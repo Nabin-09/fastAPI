@@ -110,11 +110,18 @@ insert_patient_data('Nabin' , 22)
 - Pass the validated model to object
 
 ```python
-from pydantic import BaseModel
+from pydantic import BaseModel , EmailStr , AnyUrl , Field
+from typing import List , Dict , Optional , Annotated # Annotated is used to give meta data 
 
 class Patient(BaseModel):
-    name : str
+    name : str = Annotated[str , Field(max_length = 50, title = 'Name of the patient', description = 'Name of patient in less than 50 characters' , examples=['Nabin' , 'Nitin'])]
     age : int
+    email : EmailStr #Pre-made data type from Pydantic to validate emails
+    linkedIn_url : AnyUrl 
+    weight : float = Field(gt=0) #Custom requirement , greater than 0
+    married : bool = False
+    allergies : Optional[List[str]] # If not given it return None
+    contact_details : Dict[str , str]
 
 def insert_patient_data(patient: Patient):
     print(patient.name)
@@ -127,3 +134,44 @@ patient1 = Patient(**patient_info)
 
 
 ``` 
+
+## POST requests : 
+- We send data on server in the request body
+
+```python
+
+app.post('/create')
+def create_patient(patient : Patient): #Data type of post is my Pydantic model
+```
+- This is how we actually use the Pydantic Model validation in POST requests
+
+```
+app.post('/create')
+def create_patient(patient : Patient): #Data type of post is my Pydantic model
+    # Load Existing Data
+    data = load_data()
+
+
+    #Check if Patient already Exists
+    if(patient.id in data):
+        raise HTTPException(status_code=400 , detail='Patient already Exists! ')
+
+    # new patient is added to the database
+
+    data[patient.id] = patient.model_dump(exclude=['id']) # Converts Pydantic model to Dict
+    save_data(data)
+
+    return JSONResponse(status_code=201 , content= {'message' : 'Patient created Succesfully 🚀!'})
+
+
+```
+- This is final endpoint
+```def save_data(data):
+    with open('patients.json' , 'w') as f :
+        json.dump(data , f)
+``` 
+- This was our helper fn     
+
+## PUT & DELETE requests :
+- We will need to make a new Pydantic model , based upon what data needs to be changed
+
